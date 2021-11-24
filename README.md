@@ -38,11 +38,15 @@
 
 **/category**
 
+|          Route          |   Method   |                     Description                              |    Codes        | 
+|-------------------------|------------|--------------------------------------------------------------|-----------------|
 |   /category             |    GET     |  Retrieve all categories                                     |   200/500       |
 |   /category             |    POST    |  Insert new category, cat_id uses AI constraint              |   204/422/500   |
 
 **/product**
-  
+
+|          Route          |   Method   |                     Description                              |    Codes        | 
+|-------------------------|------------|--------------------------------------------------------------|-----------------|
 |   /product/:id          |    GET     |  Retrive single product by id                                |   200/500       |
 |   /product              |    POST    |  Add new product                                             |   201/500       |
 |   /product/:id          |    DELETE  |  Retrive single product by id                                |   204/500       |
@@ -50,6 +54,8 @@
 
 **/interest**
 
+|          Route          |   Method   |                     Description                              |    Codes        | 
+|-------------------------|------------|--------------------------------------------------------------|-----------------|
 |   /interest/:userid     |    POST    | Insert user interest. Users can have multiple interests.     |   201/500       |
 
 
