@@ -18,11 +18,13 @@ module.exports = {
                 `;
 
                 userTB.query(selectAllQuery, (err, data) => { // err handler should be declared elsewhere and reused
+                    // test please
+                    // userTB.end();
                     if (err) return callback(err);
                     else return callback(null, data);
                 });
             }
-        })
+        });
     },
     selectOne: (userid, callback) => {
         userTB.connect(err => {
