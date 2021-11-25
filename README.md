@@ -1,7 +1,19 @@
 # SP IT!
 
 ## Checklist
-- [ ] redo tables as some endpoint need to use table join operation
+- [x] Redo tables as some endpoint need to use table join operation
+- [ ] Create routes
+    - [ ] Create user routes.
+    - [ ] Create category routes.
+    - [ ] Create product routes.
+    - [ ] Create interest routes.
+- [ ] Create additional/advanced features.
+    - [ ] Endpoint to upload/store images.
+        - [ ] Validate file format. Only accept .jpg / .png and less than 1MB. 
+    - [ ] Hash passwords to store into db.
+        - [ ] Generate random salt specific to each userid.
+    - [ ] Action logging system with timestamp and who did what.
+
 
 
 ### Features
@@ -34,8 +46,8 @@
 - [x] user
 - [x] product
 - [x] category
-- [ ] reviews
-- [ ] userInterest
+- [x] reviews
+- [x] userInterest
 - [ ] discount_codes
 
 ## Endpoints

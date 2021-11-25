@@ -5,6 +5,7 @@ USE sp_it;
 CREATE TABLE IF NOT EXISTS `user` (
   `userid` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(60) NOT NULL,
   `contact` VARCHAR(8) NOT NULL,
   `password` VARCHAR(32) NOT NULL,
   `type` VARCHAR(16) NOT NULL,
@@ -12,6 +13,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `created_at` TIMESTAMP NOT NULL DEFAULT NOW(),
   PRIMARY KEY (`userid`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE,
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
   UNIQUE INDEX `contact_UNIQUE` (`contact` ASC) VISIBLE,
   UNIQUE INDEX `password_UNIQUE` (`password` ASC) VISIBLE);
 
