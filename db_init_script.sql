@@ -15,10 +15,13 @@ CREATE TABLE `sp_it`.`product` (
   `productid` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `description` VARCHAR(128) NOT NULL,
-  `catergoryid` INT(11) NOT NULL,
+  `categoryid` INT(11) NOT NULL,
   `brand` VARCHAR(45) NOT NULL,
   `price` DECIMAL(6,2) NOT NULL,
   PRIMARY KEY (`productid`),
+  FOREIGN KEY (categoryid) REFERENCES category(categoryid) 
+  ON DELETE CASCADE
+  ON UPDATE CASCADE,
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE);
 
 CREATE TABLE `sp_it`.`category` (
