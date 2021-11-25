@@ -1,8 +1,7 @@
 const db = require('./dbConfig');
 const userTB = db.getConn();
 
-// needs testing
-// const errorHandler = ({ err, data, callback }) => { // parameter destructuring
+// const errorHandler = (err, data) => {
 //     if (err) return callback(err);
 //     else return callback(null, data);
 // };
@@ -13,13 +12,11 @@ module.exports = {
             if (err) return callback(err);
             else {
                 const selectAllQuery = `
-                SELECT userid, username, email, contact, password, type, profile_pic_url, created_at
+                SELECT userid, username, contact, password, type, profile_pic_url, created_at
                 FROM user;
                 `;
-
-                userTB.query(selectAllQuery, (err, data) => { // err handler should be declared elsewhere and reused
-                    // test please
-                    // userTB.end();
+                // userTB.end();
+                userTB.query(selectAllQuery, (err, data) => {
                     if (err) return callback(err);
                     else return callback(null, data);
                 });

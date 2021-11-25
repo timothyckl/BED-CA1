@@ -25,6 +25,19 @@
 - __10%__ Proper Documentation
 - __5%__ Proper db and table design w/ sample data
 
+## Database
+
+- [x] SP_IT
+
+## Tables 
+
+- [x] user
+- [x] product
+- [x] category
+- [ ] reviews
+- [ ] userInterest
+- [ ] discount_codes
+
 ## Endpoints
 
 **/user**
