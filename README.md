@@ -3,7 +3,7 @@
 ## Checklist
 - [x] Redo tables as some endpoint need to use table join operation
 - [ ] Create routes
-    - [ ] Create user routes.
+    - [x] Create user routes.
     - [ ] Create category routes.
     - [ ] Create product routes.
     - [ ] Create interest routes.
