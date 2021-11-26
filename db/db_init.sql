@@ -20,7 +20,6 @@ CREATE TABLE IF NOT EXISTS `category` (
   `categoryname` VARCHAR(45) NOT NULL,
   `description` VARCHAR(128) NOT NULL,
   PRIMARY KEY (`categoryid`),
-  UNIQUE INDEX `categoryid_UNIQUE` (`categoryid` ASC) VISIBLE,
   UNIQUE INDEX `categoryname_UNIQUE` (`categoryname` ASC) VISIBLE,
   UNIQUE INDEX `description_UNIQUE` (`description` ASC) VISIBLE);
 
