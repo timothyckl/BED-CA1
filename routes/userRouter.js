@@ -20,7 +20,7 @@ userRouter.route('/')
             newEmail: email
         }, (err, data) => {
             if (err) res.status(500).json({ err: err });
-            else if (data > 0) res.status(422).json({ error: 'Username/Email already exists. Try again.' }); // does not execute... instead throws err object at line 19
+            else if (data > 0) res.status(422).json({ error: 'Username/Email already exists. Try again.' });
             else {
                 userTB.createOne(req.body, (err, data) => {
                     if (err) res.status(500).json({ error: err });
@@ -54,13 +54,3 @@ userRouter.route('/:id')
     });
 
 module.exports = userRouter;
-
-// if (err) res.status(500).json({ error: err });
-//             // if duplicates are found, data will be > 0
-//             else if (data > 0) res.status(422).json({ error: 'Username/Email already exists. Try again.' }); // does not execute... instead throws err object at line 19
-//             else {
-//                 userTB.createOne(req.body, (err, data) => {
-//                     if (err) res.status(500).json({ error: err });
-//                     else res.status(201).json({ msg: `Success! Rows affected: ${data}` });
-//                 });
-//             }
