@@ -9,7 +9,7 @@ module.exports = {
                 const selectOneQuery = `
                 table join product and category table
                 `;
-                const values = [product_id];
+                const values = product_id;
 
                 productTB.query(selectOneQuery, values, (err, data) => {
                     if (err) return callback(err);

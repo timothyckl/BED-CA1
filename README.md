@@ -57,9 +57,9 @@
 |          Route          |   Method   |                     Description                              |    Codes        | 
 |-------------------------|------------|--------------------------------------------------------------|-----------------|
 |   /users                |    GET     |  Retrieve array of all user/admin data                       |   200/500       |
+|   /users                |    POST    |  Add new user                                                |   201/422/500   |
 |   /users/:id            |    GET     |  Retrieve single user data by id                             |   200/500       |
 |   /users/:id            |    PUT     |  Update single user data excluding id,timestamp              |   204/422/500   |
-|   /users/:id            |    POST    |  Add new user                                                |   201/422/500   |
 
 **/category**
 

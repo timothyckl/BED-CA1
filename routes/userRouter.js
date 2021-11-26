@@ -8,6 +8,26 @@ userRouter.route('/')
             if (err) res.status(500).json({ error: err });
             else res.status(200).json({ data: data });
         });
+    })
+    .post((req, res) => {
+        const {
+            username,
+            email
+        } = req.body;
+
+        userTB.validateData({
+            newUsername: username,
+            newEmail: email
+        }, (err, data) => {
+            if (err) res.status(500).json({ err: err });
+            else if (data > 0) res.status(422).json({ error: 'Username/Email already exists. Try again.' }); // does not execute... instead throws err object at line 19
+            else {
+                userTB.createOne(req.body, (err, data) => {
+                    if (err) res.status(500).json({ error: err });
+                    else res.status(201).json({ msg: `Success! Rows affected: ${data}` });
+                });
+            }
+        });
     });
 
 userRouter.route('/:id')
@@ -20,11 +40,27 @@ userRouter.route('/:id')
     })
     .put((req, res) => {
         const { id } = req.params;
-        userTB.updateOne(id, req.body, (err, data) => {
+        userTB.validateData(req.body, (err, data) => {
             if (err) res.status(500).json({ error: err });
-            else res.status(204).send(`Success! Rows updated: ${data}`);
+            // if duplicates are found, data will be > 0
+            else if (data > 0) res.status(422).json({ err: 'Username/Email already exists. Try again.' });
+            else {
+                userTB.updateOne(id, req.body, (err, data) => {
+                    if (err) res.status(500).json({ error: err });
+                    else res.status(204).json();
+                });
+            };
         });
-    })
-    .post();
+    });
 
 module.exports = userRouter;
+
+// if (err) res.status(500).json({ error: err });
+//             // if duplicates are found, data will be > 0
+//             else if (data > 0) res.status(422).json({ error: 'Username/Email already exists. Try again.' }); // does not execute... instead throws err object at line 19
+//             else {
+//                 userTB.createOne(req.body, (err, data) => {
+//                     if (err) res.status(500).json({ error: err });
+//                     else res.status(201).json({ msg: `Success! Rows affected: ${data}` });
+//                 });
+//             }

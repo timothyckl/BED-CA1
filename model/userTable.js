@@ -75,7 +75,7 @@ module.exports = {
             } else {
 
                 // old user data
-                const {
+                let {
                     username,
                     email,
                     contact,
@@ -106,29 +106,36 @@ module.exports = {
 
                 userTB.query(updateOneQuery, values, (err, data) => {
                     if (err) return callback(err);
-                    else return callback(null, data.affectedRows);
-                });
-            }
-        });
-    },
-    createOne: (username, email, contact, password, type, profile_pic_url, callback) => {
-        userTB.connect(err => {
-            if (err) {
-                return callback(err);
-            } else {
-                const createOneQuery = `
-                INSERT INTO user (userid, username, email, email, contact, password, type, profile_pic_url, created_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?);
-                `;
-                const values = [username, email, contact, password, type, profile_pic_url];
-                userTB.query(createOneQuery, values, (err, data) => {
-                    if (err) return callback(err);
                     else return callback(null, data);
                 });
             }
         });
     },
-    validateData: (id, {
+    createOne: ({
+        username,
+        email,
+        contact,
+        password,
+        type,
+        profile_pic_url
+    }, callback) => {
+        userTB.connect(err => {
+            if (err) {
+                return callback(err);
+            } else {
+                const createOneQuery = `
+                INSERT INTO user (username, email, contact, password, type, profile_pic_url)
+                VALUES (?, ?, ?, ?, ?, ?);
+                `;
+                const values = [username, email, contact, password, type, profile_pic_url];
+                userTB.query(createOneQuery, values, (err, data) => {
+                    if (err) return callback(err);
+                    else return callback(null, data.affectedRows);
+                });
+            }
+        });
+    },
+    validateData: ({
         newUsername,
         newEmail
     }, callback) => {
@@ -137,21 +144,19 @@ module.exports = {
                 return callback(err);
             } else {
                 // check for username/email duplicates in db
-                const validationQuery = `
-                SELECT COUNT(u.username) as Duplicates
+                const countQuery = `
+                SELECT COUNT(u.username) as duplicates
                 FROM user as u
                 WHERE u.username = ?
                 OR u.email = ?;
                 `;
 
-                userTB.query(validationQuery, [newUsername, newEmail], (err, data) => {
+                userTB.query(countQuery, [newUsername, newEmail], (err, data) => {
                     if (err) {
                         return callback(err);
                     } else {
-                        const duplicates = data[0].Duplicates
-                        if (duplicates > 0) {
-                            // still testing
-                        }
+                        const duplicates = data[0].duplicates
+                        return callback(null, duplicates);
                     }
                 });
             }
