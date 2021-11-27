@@ -12,7 +12,7 @@
         - [x] Validate file format. Only accept .jpg / .png and less than 1MB. 
     - [ ] Hash passwords to store into db.
         - [ ] Generate random salt specific to each userid.
-    - [ ] Action logging system with timestamp and who did what.
+    - [ ] Action logging system with timestamp for each request made.
 
 
 
