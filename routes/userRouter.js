@@ -46,6 +46,7 @@ userRouter.route('/:id')
         const { id } = req.params;
         userTB.selectOne(id, (err, data) => {
             if (err) res.status(500).json({ error: err });
+            else if (data.length == 0) res.status(404).json({ err: 'User not found.Try again' });
             else res.status(200).json({ data: data });
         });
     })
