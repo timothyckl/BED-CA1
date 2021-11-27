@@ -5,7 +5,7 @@ const image = require('../middleware/image');
 const userRouter = express.Router();
 const userTB = require('../model/userTable');
 
-userRouter.use(fileUpload({}));
+userRouter.use(fileUpload());
 
 userRouter.route('/')
     .get((req, res) => {
