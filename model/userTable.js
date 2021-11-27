@@ -112,13 +112,13 @@ module.exports = {
         });
     },
     createOne: ({
-        username,
-        email,
-        contact,
-        password,
-        type,
-        profile_pic_url
-    }, callback) => {
+            username,
+            email,
+            contact,
+            password,
+            type
+        },
+        profile_pic_url, callback) => {
         userTB.connect(err => {
             if (err) {
                 return callback(err);

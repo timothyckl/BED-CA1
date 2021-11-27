@@ -1,6 +1,11 @@
 const express = require('express');
+const fileUpload = require('express-fileupload');
+const image = require('../middleware/image');
+
 const userRouter = express.Router();
 const userTB = require('../model/userTable');
+
+userRouter.use(fileUpload({}));
 
 userRouter.route('/')
     .get((req, res) => {
@@ -22,10 +27,22 @@ userRouter.route('/')
             if (err) res.status(500).json({ err: err });
             else if (data > 0) res.status(422).json({ error: 'Username/Email already exists. Try again.' });
             else {
-                userTB.createOne(req.body, (err, data) => {
-                    if (err) res.status(500).json({ error: err });
-                    else res.status(201).json({ msg: `Success! Rows affected: ${data}` });
-                });
+                const { profilePic } = req.files;
+                const { size } = profilePic;
+                const lessThan1MB = size < 1000000;
+                const imageFormat = profilePic.mimetype.split('/')[1];
+                const correctFormat = imageFormat == ('jpg' || 'png');
+                if (lessThan1MB) {
+                    if (correctFormat) {
+                        profilePic.mv(filePath, err => {
+                            if (err) res.status(500).json(err);
+                            else userTB.createOne(req.body, filePath, (err, data) => {
+                                if (err) res.status(500).json({ error: err });
+                                else res.status(201).json({ msg: `Success! Rows affected: ${data}` });
+                            });
+                        });
+                    } else res.status(500).json({ error: `File must be in jpg/png format. Try again.` });
+                } else res.status(500).json({ error: `File must be less than 1MB. Try again.` });
             }
         });
     });
