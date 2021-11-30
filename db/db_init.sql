@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `created_at` TIMESTAMP NOT NULL DEFAULT NOW(),
   PRIMARY KEY (`userid`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE,
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE;
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE);
 
 CREATE TABLE IF NOT EXISTS `category` (
   `categoryid` INT NOT NULL AUTO_INCREMENT,
