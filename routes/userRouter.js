@@ -31,6 +31,7 @@ userRouter.route('/')
                 image.validateFile(profilePic, err => {
                     if (err) res.status(500).json({ error: err });
                     else {
+                        const filePath = image.getFilePath(profilePic)
                         userTB.createOne(req.body, filePath, (err, data) => {
                             if (err) res.status(500).json({ error: err });
                             else res.status(201).json({ msg: `Success! Rows affected: ${data}` });

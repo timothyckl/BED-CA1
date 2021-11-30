@@ -4,20 +4,29 @@ module.exports = {
     getFilePath: (profilePic) => {
         // save current working directory to cwd
         const cwd = process.cwd();
-        let filePath = `${cwd}/img/${profilePic.name}`;
-        filePath = (path.relative(cwd, filePath)).split('\\').join('/');
-        return filePath;
+        // absolute path
+        const filePath = `${cwd}/img/${profilePic.name}`;
+        // relative path
+        const relativePath = (path.relative(cwd, filePath)).split('\\').join('/');
+
+        profilePic.mv(relativePath, err => {
+            if (err) return err;
+        });
+
+        return relativePath;
     },
     validateFile: ({ size, mimetype }, callback) => {
-        const imageFormat = mimetype.split('/')[1];
+        const [type, subtype] = mimetype.split('/');
+
+        const allowedTypes = ['image'];
+        const allowedSubtypes = ['jpeg', 'png'];
+
         // size is in bytes, 1000000 = 1MB
         const lessThan1MB = size < 1000000;
-        const correctFormat = imageFormat == ('jpg' || 'png');
 
-        if (!lessThan1MB) {
-            return callback('Image file must be less than 1MB. Try again.');
-        } else if (!correctFormat) {
-            return callback('Image file must be in jpg/png format. Try again.');
-        }
+        if (type != allowedTypes) return callback(new Error('Only image files are allowed. Try again.'));
+        else if (!allowedSubtypes.includes(subtype)) return callback(new Error('Image file must be in jpg/png format. Try again.'));
+        else if (!lessThan1MB) return callback(new Error('Image file must be less than 1MB. Try again.'));
+        else return callback(null);
     }
 };
