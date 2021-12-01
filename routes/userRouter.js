@@ -29,7 +29,7 @@ userRouter.route('/')
             else {
                 const { profilePic } = req.files;
                 image.validateFile(profilePic, err => {
-                    if (err) res.status(500).json({ error: err });
+                    if (err) res.status(500).json({ error: err.message });
                     else {
                         const filePath = image.getFilePath(profilePic)
                         userTB.createOne(req.body, filePath, (err, data) => {
@@ -45,25 +45,31 @@ userRouter.route('/')
 userRouter.route('/:id')
     .get((req, res) => {
         const { id } = req.params;
-        userTB.selectOne(id, (err, data) => {
-            if (err) res.status(500).json({ error: err });
-            else if (data.length == 0) res.status(404).json({ err: 'User not found.Try again' });
-            else res.status(200).json({ data: data });
-        });
+        if (isNaN(id)) res.status(500).json({ err: 'User ID is not a number. Try again.' });
+        else {
+            userTB.selectOne(id, (err, data) => {
+                if (err) res.status(500).json({ error: err });
+                else if (data.length == 0) res.status(404).json({ err: 'User not found.Try again' });
+                else res.status(200).json({ data: data });
+            });
+        }
     })
     .put((req, res) => {
         const { id } = req.params;
-        userTB.validateData(req.body, (err, data) => {
-            if (err) res.status(500).json({ error: err });
-            // if duplicates are found, data will be > 0
-            else if (data > 0) res.status(422).json({ err: 'Username/Email already exists. Try again.' });
-            else {
-                userTB.updateOne(id, req.body, (err, data) => {
-                    if (err) res.status(500).json({ error: err });
-                    else res.status(204).json();
-                });
-            };
-        });
+        if (isNaN(id)) res.status(500).json({ err: 'User ID is not a number. Try again.' });
+        else {
+            userTB.validateData(req.body, (err, data) => {
+                if (err) res.status(500).json({ error: err });
+                // if duplicates are found, data will be > 0
+                else if (data > 0) res.status(422).json({ err: 'Username/Email already exists. Try again.' });
+                else {
+                    userTB.updateOne(id, req.body, (err, data) => {
+                        if (err) res.status(500).json({ error: err });
+                        else res.status(204).json();
+                    });
+                };
+            });
+        }
     });
 
 module.exports = userRouter;
