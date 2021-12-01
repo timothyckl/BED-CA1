@@ -4,7 +4,7 @@
 - [x] Redo tables as some endpoint need to use table join operation
 - [ ] Create routes
     - [x] Create user routes.
-    - [ ] Create category routes.
+    - [x] Create category routes.
     - [ ] Create product routes.
     - [ ] Create interest routes.
 - [ ] Create additional/advanced features.
