@@ -9,9 +9,9 @@ userRouter.use(fileUpload());
 
 userRouter.route('/')
     .get((req, res) => {
-        userTB.selectAll((err, data) => {
+        userTB.selectAll((err, allUsers) => {
             if (err) res.status(500).json({ error: err });
-            else res.status(200).json({ data: data });
+            else res.status(200).json(allUsers);
         });
     })
     .post((req, res) => {
@@ -32,9 +32,9 @@ userRouter.route('/')
                     if (err) res.status(500).json({ error: err.message });
                     else {
                         const filePath = image.getFilePath(profilePic)
-                        userTB.createOne(req.body, filePath, (err, data) => {
+                        userTB.createOne(req.body, filePath, (err, affectedRows) => {
                             if (err) res.status(500).json({ error: err });
-                            else res.status(201).json({ msg: `Success! Rows affected: ${data}` });
+                            else res.status(201).json({ "Affected rows": affectedRows });
                         });
                     }
                 });
@@ -47,10 +47,10 @@ userRouter.route('/:id')
         const { id } = req.params;
         if (isNaN(id)) res.status(500).json({ err: 'User ID is not a number. Try again.' });
         else {
-            userTB.selectOne(id, (err, data) => {
+            userTB.selectOne(id, (err, userData) => {
                 if (err) res.status(500).json({ error: err });
-                else if (data.length == 0) res.status(404).json({ err: 'User not found.Try again' });
-                else res.status(200).json({ data: data });
+                else if (userData.length == 0) res.status(404).json({ err: 'User not found.Try again' });
+                else res.status(200).json(userData);
             });
         }
     })
@@ -63,9 +63,9 @@ userRouter.route('/:id')
                 // if duplicates are found, data will be > 0
                 else if (data > 0) res.status(422).json({ err: 'Username/Email already exists. Try again.' });
                 else {
-                    userTB.updateOne(id, req.body, (err, data) => {
+                    userTB.updateOne(id, req.body, (err, affectedRows) => {
                         if (err) res.status(500).json({ error: err });
-                        else res.status(204).json();
+                        else res.status(204).json({ "Affected rows": affectedRows });
                     });
                 };
             });

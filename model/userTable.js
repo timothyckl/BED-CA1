@@ -5,7 +5,7 @@ module.exports = {
     selectAll: (callback) => {
         userTB.connect(err => {
             if (err) {
-                return callback(err);
+                return callback(err, null);
             } else {
                 const selectAllQuery = `
                 SELECT userid,
@@ -19,7 +19,7 @@ module.exports = {
                 FROM user;
                 `;
                 userTB.query(selectAllQuery, (err, data) => {
-                    if (err) return callback(err);
+                    if (err) return callback(err, null);
                     else return callback(null, data);
                 });
             }
@@ -28,7 +28,7 @@ module.exports = {
     selectOne: (userid, callback) => {
         userTB.connect(err => {
             if (err) {
-                return callback(err);
+                return callback(err, null);
             } else {
                 const selectOneQuery = `
                 SELECT userid,
@@ -44,7 +44,7 @@ module.exports = {
                 `;
                 const values = userid;
                 userTB.query(selectOneQuery, values, (err, data) => {
-                    if (err) return callback(err);
+                    if (err) return callback(err, null);
                     else return callback(null, data);
                 });
             }
@@ -71,7 +71,7 @@ module.exports = {
                     `;
         userTB.query(selectOneQuery, id, (err, data) => {
             if (err) {
-                return callback(err);
+                return callback(err, null);
             } else {
 
                 // old user data
@@ -105,8 +105,8 @@ module.exports = {
                 const values = [username, email, contact, password, type, profile_pic_url, id];
 
                 userTB.query(updateOneQuery, values, (err, data) => {
-                    if (err) return callback(err);
-                    else return callback(null, data);
+                    if (err) return callback(err, null);
+                    else return callback(null, data.affectedRows);
                 });
             }
         });
@@ -121,7 +121,7 @@ module.exports = {
         profile_pic_url, callback) => {
         userTB.connect(err => {
             if (err) {
-                return callback(err);
+                return callback(err, null);
             } else {
                 const createOneQuery = `
                 INSERT INTO user (username, email, contact, password, type, profile_pic_url)
@@ -129,7 +129,7 @@ module.exports = {
                 `;
                 const values = [username, email, contact, password, type, profile_pic_url];
                 userTB.query(createOneQuery, values, (err, data) => {
-                    if (err) return callback(err);
+                    if (err) return callback(err, null);
                     else return callback(null, data.affectedRows);
                 });
             }
@@ -141,7 +141,7 @@ module.exports = {
     }, callback) => {
         userTB.connect(err => {
             if (err) {
-                return callback(err);
+                return callback(err, null);
             } else {
                 // check for username/email duplicates in db
                 const countQuery = `
@@ -150,10 +150,11 @@ module.exports = {
                 WHERE u.username = ?
                 OR u.email = ?;
                 `;
+                const values = [newUsername, newEmail];
 
-                userTB.query(countQuery, [newUsername, newEmail], (err, data) => {
+                userTB.query(countQuery, values, (err, data) => {
                     if (err) {
-                        return callback(err);
+                        return callback(err, null);
                     } else {
                         const duplicates = data[0].duplicates
                         return callback(null, duplicates);
