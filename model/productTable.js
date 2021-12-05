@@ -7,7 +7,10 @@ module.exports = {
             if (err) return callback(err);
             else {
                 const selectOneQuery = `
-                table join product and category table
+                SELECT
+                    _
+                FROM
+                    product;
                 `;
                 const values = product_id;
 

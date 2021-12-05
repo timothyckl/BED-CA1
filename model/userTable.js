@@ -8,15 +8,17 @@ module.exports = {
                 return callback(err, null);
             } else {
                 const selectAllQuery = `
-                SELECT userid,
-                username,
-                email,
-                contact,
-                password,
-                type,
-                profile_pic_url,
-                created_at
-                FROM user;
+                SELECT
+                    userid,
+                    username,
+                    email,
+                    contact,
+                    password,
+                    type,
+                    profile_pic_url,
+                    created_at
+                FROM
+                    user;
                 `;
                 userTB.query(selectAllQuery, (err, data) => {
                     if (err) return callback(err, null);
@@ -31,16 +33,19 @@ module.exports = {
                 return callback(err, null);
             } else {
                 const selectOneQuery = `
-                SELECT userid,
-                username,
-                email,
-                contact,
-                password,
-                type,
-                profile_pic_url,
-                created_at
-                FROM user
-                WHERE userid = ?;
+                SELECT
+                    userid,
+                    username,
+                    email,
+                    contact,
+                    password,
+                    type,
+                    profile_pic_url,
+                    created_at
+                FROM
+                    user
+                WHERE
+                    userid = ?;
                 `;
                 const values = userid;
                 userTB.query(selectOneQuery, values, (err, data) => {
@@ -60,14 +65,17 @@ module.exports = {
     }, callback) => {
         // once validated, update user data
         const selectOneQuery = `
-                    SELECT username,
-                    email,
-                    contact,
-                    password,
-                    type, 
-                    profile_pic_url
-                    FROM user
-                    WHERE userid = ?;
+                    SELECT
+                        username,
+                        email,
+                        contact,
+                        password,
+                        type, 
+                        profile_pic_url
+                    FROM
+                        user
+                    WHERE
+                        userid = ?;
                     `;
         userTB.query(selectOneQuery, id, (err, data) => {
             if (err) {
@@ -93,14 +101,17 @@ module.exports = {
                 if (new_profile_pic_url) profile_pic_url = new_profile_pic_url;
 
                 const updateOneQuery = `
-                            UPDATE user
-                            SET username = ?,
-                            email = ?,
-                            contact = ?,
-                            password = ?,
-                            type = ?,
-                            profile_pic_url = ?
-                            WHERE userid = ?;
+                            UPDATE
+                                user
+                            SET
+                                username = ?,
+                                email = ?,
+                                contact = ?,
+                                password = ?,
+                                type = ?,
+                                profile_pic_url = ?
+                            WHERE
+                                userid = ?;
                             `;
                 const values = [username, email, contact, password, type, profile_pic_url, id];
 
@@ -124,8 +135,11 @@ module.exports = {
                 return callback(err, null);
             } else {
                 const createOneQuery = `
-                INSERT INTO user (username, email, contact, password, type, profile_pic_url)
-                VALUES (?, ?, ?, ?, ?, ?);
+                INSERT INTO
+                    user
+                    (username, email, contact, password, type, profile_pic_url)
+                VALUES
+                    (?, ?, ?, ?, ?, ?);
                 `;
                 const values = [username, email, contact, password, type, profile_pic_url];
                 userTB.query(createOneQuery, values, (err, data) => {
@@ -145,10 +159,14 @@ module.exports = {
             } else {
                 // check for username/email duplicates in db
                 const countQuery = `
-                SELECT COUNT(u.username) as duplicates
-                FROM user as u
-                WHERE u.username = ?
-                OR u.email = ?;
+                SELECT
+                    COUNT(username) as duplicates
+                FROM
+                    user
+                WHERE
+                    username = ?
+                OR
+                    email = ?;
                 `;
                 const values = [newUsername, newEmail];
 
