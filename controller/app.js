@@ -7,7 +7,6 @@ const productRouter = require('../routes/productRouter');
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-
 // Use routers here
 app.use('/users', userRouter);
 app.use('/category', categoryRouter);
