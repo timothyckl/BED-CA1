@@ -2,25 +2,92 @@ const db = require('./dbConfig');
 const productTB = db.getConn();
 
 module.exports = {
-    selectOne: (product_id, callback) => {
+    selectOne: (productid, callback) => {
         productTB.connect(err => {
             if (err) return callback(err);
             else {
                 const selectOneQuery = `
-                SELECT
-                    _
-                FROM
-                    product;
+                SELECT 
+                    p.name, 
+                    p.description, 
+                    p.categoryid, 
+                    c.categoryname, 
+                    p.brand, 
+                    p.price 
+                FROM 
+                    product as p, 
+                    category as c 
+                WHERE 
+                    p.productid = ? 
+                AND 
+                    p.categoryid = c.categoryid;
                 `;
-                const values = product_id;
+                const values = productid;
 
-                productTB.query(selectOneQuery, values, (err, data) => {
+                productTB.query(selectOneQuery, values, (err, productInfo) => {
                     if (err) return callback(err);
-                    else return callback(null, err);
+                    else return callback(null, productInfo);
                 });
             }
         });
     },
+    createOne: ({
+        name,
+        description,
+        categoryid,
+        brand,
+        price
+    }, callback) => {
+        productTB.connect(err => {
+            if (err) return callback(err, null);
+            else {
+                const createOneQuery = `
+                INSERT INTO
+                    product
+                    (name, description, categoryid, brand, price)
+                VALUES 
+                    (?, ?, ?, ?, ?);
+                `;
+                const values = [name, description, categoryid, brand, price];
+                productTB.query(createOneQuery, values, (err, affectedRows) => {
+                    if (err) return callback(err, null);
+                    else {
+                        const selectQuery = `
+                        SELECT 
+                            productid
+                        FROM 
+                            product
+                        ORDER BY 
+                            productid
+                        DESC LIMIT 1;
+                        `;
+                        productTB.query(selectQuery, (err, productid) => {
+                            const pid = productid[0].productid;
+                            if (err) return callback(err, null);
+                            else return callback(null, pid);
+                        });
+                    };
+                });
+            }
+        });
+    },
+    deleteOne: (productid, callback) => {
+        productTB.connect(err => {
+            if (err) return callback(err, null);
+            else {
+                const deleteQuery = `
+                DELETE FROM
+                    product
+                WHERE
+                    productid = ?;
+                `;
+                const values = productid;
 
-
+                productTB.query(deleteQuery, values, (err, affectedRows) => {
+                    if (err) return callback(err, null);
+                    else return callback(null, affectedRows.affectedRows);
+                });
+            }
+        });
+    }
 };
