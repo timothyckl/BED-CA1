@@ -47,8 +47,8 @@ module.exports = {
                 WHERE
                     userid = ?;
                 `;
-                const values = userid;
-                userTB.query(selectOneQuery, values, (err, data) => {
+
+                userTB.query(selectOneQuery, userid, (err, data) => {
                     if (err) return callback(err, null);
                     else return callback(null, data);
                 });
