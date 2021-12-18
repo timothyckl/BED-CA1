@@ -22,9 +22,8 @@ module.exports = {
                 AND 
                     p.categoryid = c.categoryid;
                 `;
-                const values = productid;
 
-                productTB.query(selectOneQuery, values, (err, productInfo) => {
+                productTB.query(selectOneQuery, productid, (err, productInfo) => {
                     if (err) return callback(err);
                     else return callback(null, productInfo);
                 });
@@ -81,9 +80,8 @@ module.exports = {
                 WHERE
                     productid = ?;
                 `;
-                const values = productid;
 
-                productTB.query(deleteQuery, values, (err, affectedRows) => {
+                productTB.query(deleteQuery, productid, (err, affectedRows) => {
                     if (err) return callback(err, null);
                     else return callback(null, affectedRows.affectedRows);
                 });
