@@ -81,9 +81,9 @@ module.exports = {
                     productid = ?;
                 `;
 
-                productTB.query(deleteQuery, productid, (err, affectedRows) => {
+                productTB.query(deleteQuery, productid, (err, data) => {
                     if (err) return callback(err, null);
-                    else return callback(null, affectedRows.affectedRows);
+                    else return callback(null, data);
                 });
             }
         });
