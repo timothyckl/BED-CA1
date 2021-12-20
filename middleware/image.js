@@ -16,7 +16,7 @@ module.exports = {
         return relativePath;
     },
     // REDO VALIDATION
-    // SHOULD CHECK FILES HEXCODE TO VERIFY FILE TYPE
+    // SHOULD CHECK FILES HEXCODE AND FILE EXT TO VERIFY FILE TYPE
     // e.g. gifs renamed as jpg/png should NOT pass
     validateFile: ({ size, mimetype }, callback) => {
         const [type, subtype] = mimetype.split('/');
