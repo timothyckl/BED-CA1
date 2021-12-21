@@ -25,7 +25,7 @@ module.exports = {
 
                 productTB.query(selectOneQuery, productid, (err, productInfo) => {
                     if (err) return callback(err);
-                    else return callback(null, productInfo);
+                    else return callback(null, productInfo[0]);
                 });
             }
         });
@@ -48,7 +48,7 @@ module.exports = {
                     (?, ?, ?, ?, ?);
                 `;
                 const values = [name, description, categoryid, brand, price];
-                productTB.query(createOneQuery, values, (err, affectedRows) => {
+                productTB.query(createOneQuery, values, err => {
                     if (err) return callback(err, null);
                     else {
                         const selectQuery = `
@@ -85,6 +85,71 @@ module.exports = {
                     if (err) return callback(err, null);
                     else return callback(null, data);
                 });
+            }
+        });
+    },
+    createReview: (productID, { userID, rating, review }, callback) => {
+        productTB.connect(err => {
+            if (err) return callback(err, null);
+            else {
+                const insertQuery = `
+                INSERT INTO
+                    reviews
+                    (productid, userid, rating, review)
+                VALUES
+                    (?, ?, ?, ?);
+                `;
+                const values = [productID, userID, rating, review];
+
+                productTB.query(insertQuery, values, err => {
+                    if (err) return callback(err, null);
+                    else {
+                        const selectQuery = `
+                        SELECT 
+                            reviewid
+                        FROM 
+                            reviews
+                        ORDER BY
+                            reviewid
+                        DESC LIMIT 1;
+                        `;
+                        productTB.query(selectQuery, (err, reviewid) => {
+                            if (err) return callback(err, null);
+                            else return callback(null, reviewid[0]);
+                        })
+                    }
+                });
+            }
+        });
+    },
+    selectReview: (productID, callback) => {
+        productTB.connect(err => {
+            if (err) return callback(err, null);
+            else {
+                const selectQuery = `
+                SELECT 
+                    r.productid, 
+                    p.name AS product_name, 
+                    r.userid,
+                    u.username, 
+                    r.rating, 
+                    r.review, 
+                    r.created_at
+                FROM 
+                    reviews AS r, 
+                    product AS p, 
+                    user AS u
+                WHERE 
+                    r.userid = u.userid 
+                AND 
+                    r.productid = p.productid
+                AND 
+                    r.productid = ?;
+                `;
+                productTB.query(selectQuery, productID, (err, reviews) => {
+                    if (err) return callback(err, null);
+                    else return callback(null, reviews);
+                })
             }
         });
     }

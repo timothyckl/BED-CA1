@@ -92,6 +92,14 @@ productRouter.post('/:id/review', (req, res) => {
 
     // Error Code: 500
     // Condition: Unknown Error
+    const { id } = req.params;
+    if (isNaN(id)) res.status(500).json({ error: "Internal Server Error" });
+    else {
+        productTB.createReview(id, req.body, (err, reviewid) => {
+            if (err) res.status(500).json({ error: "Internal Server Error" });
+            else res.status(201).json(reviewid);
+        });
+    }
 });
 
 productRouter.get('/:id/reviews', (req, res) => {
@@ -112,9 +120,16 @@ productRouter.get('/:id/reviews', (req, res) => {
     //     ...
     // ]
 
-
     // Error Code: 500
     // Condition: Unknown Error
+    const { id } = req.params;
+    if (isNaN(id)) res.status(500).json({ error: "Internal Server Error" });
+    else {
+        productTB.selectReview(id, (err, reviews) => {
+            if (err) res.status(500).json({ error: "Internal Server Error" });
+            else res.status(200).json(reviews);
+        });
+    }
 });
 
 module.exports = productRouter;
