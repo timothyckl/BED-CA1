@@ -12,4 +12,8 @@ app.use('/users', userRouter);
 app.use('/category', categoryRouter);
 app.use('/product', productRouter);
 
+app.post('/interest/:userid', (req, res) => {
+
+});
+
 module.exports = app;
