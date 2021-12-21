@@ -16,4 +16,8 @@ app.post('/interest/:userid', (req, res) => {
 
 });
 
+app.all('*', (req, res) => {
+    res.status(405).json({ error: 'Target resource does not support this method' });
+});
+
 module.exports = app;
