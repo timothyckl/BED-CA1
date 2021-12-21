@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `reviews` (
   `userid` INT NOT NULL,
   `rating` INT NOT NULL,
   `review` varchar(128) NOT NULL,
-  `created_at` timestamp NOT NULL,
+  `created_at` TIMESTAMP NOT NULL DEFAULT NOW(),
   PRIMARY KEY (`reviewid`),
   FOREIGN KEY (productid) 
   REFERENCES product(productid) 
