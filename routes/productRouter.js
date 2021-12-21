@@ -75,24 +75,51 @@ productRouter.route('/:id')
         }
     });
 
-productRouter.route('/:id/review')
-    .post((req, res) => {
-        // POST /product/:id/review/
-        // Request body schema:
-        // {
-        //     “userid”:1,
-        //     “rating”:5
-        //     "review": “Good Laptop, super fast and can play game in class!”
-        // }
+productRouter.post('/:id/review', (req, res) => {
+    // POST /product/:id/review/
+    // Request body schema:
+    // {
+    //     “userid”:1,
+    //     “rating”:5
+    //     "review": “Good Laptop, super fast and can play game in class!”
+    // }
 
-        // Success Code: 201
-        // Content: ID of the newly created listing
-        // {
-        //     "reviewid": 1
-        // }
+    // Success Code: 201
+    // Content: ID of the newly created listing
+    // {
+    //     "reviewid": 1
+    // }
 
-        // Error Code: 500
-        // Condition: Unknown Error
-    });
+    // Error Code: 500
+    // Condition: Unknown Error
+});
+
+productRouter.get('/:id/reviews', (req, res) => {
+    // GET /product/:id/reviews/
+    // Request body schema:
+    // {
+    //     “userid”:1,
+    //     “rating”:5
+    //     "review": “Good Laptop, super fast and can play game in class!”
+    // }
+
+    // Success Code: 200
+    // Content: Retrieves all the reviews of a particular product, including the username of the reviewer (tables join required).
+    // [
+    //     {
+    //        "productid":1,
+    //         “userid”:1
+    //          “username”:”Terry Tan”,
+    //         “rating”:5
+    //         "review": “Good Laptop, love gaming in school!”,
+    //         "created_at": "2021-11-15 18:54:57"
+    //     },
+    //     ...
+    // ]
+
+
+    // Error Code: 500
+    // Condition: Unknown Error
+});
 
 module.exports = productRouter;
