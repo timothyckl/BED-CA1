@@ -2,14 +2,14 @@
 
 ## Checklist
 - [x] Redo tables as some endpoint need to use table join operation
-- [ ] Create routes
+- [x] Create routes
     - [x] Create user routes.
     - [x] Create category routes.
     - [x] Create product routes.
-    - [ ] Create interest routes.
+    - [x] Create interest routes.
 - [ ] Create additional/advanced features.
     - [x] Endpoint to upload/store images.
-        - [x] Validate file format. Only accept .jpg / .png and less than 1MB. 
+        - [ ] Validate file format. Only accept .jpg / .png and less than 1MB. 
     - [ ] Hash passwords to store into db.
         - [ ] Generate random salt specific to each userid.
     - [ ] Action logging system with timestamp for each request made.
@@ -17,15 +17,15 @@
 
 
 ### Features
-- [ ] User registration
-- [ ] Publication of product info
-- [ ] Insertion of products
-- [ ] User reviews
+- [x] User registration
+- [x] Publication of product info
+- [x] Insertion of products
+- [x] User reviews
 
 ### Requirements
-- [ ] Create MySQL database
+- [x] Create MySQL database
 - [ ] Create entity relationship diagram
-- [ ] Proper use of PK and FK constraints
+- [x] Proper use of PK and FK constraints
 - [ ] __(BONUS)__ Create endpoint for img upload/storage
   - Server should only accept .jpg/.png < 1MB
 - [ ] __(BONUS)__ Retrieve product listings from server
