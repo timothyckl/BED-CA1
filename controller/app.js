@@ -3,6 +3,7 @@ const app = express();
 const userRouter = require('../routes/userRouter');
 const categoryRouter = require('../routes/categoryRouter');
 const productRouter = require('../routes/productRouter');
+const userIntRouter = require('../routes/userInterestRouter');
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -11,10 +12,7 @@ app.use(express.json());
 app.use('/users', userRouter);
 app.use('/category', categoryRouter);
 app.use('/product', productRouter);
-
-app.post('/interest/:userid', (req, res) => {
-
-});
+app.use('/interest', userIntRouter);
 
 app.all('*', (req, res) => {
     res.status(405).json({ error: 'Target resource does not support this method' });
