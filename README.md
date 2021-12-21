@@ -5,7 +5,7 @@
 - [ ] Create routes
     - [x] Create user routes.
     - [x] Create category routes.
-    - [ ] Create product routes.
+    - [x] Create product routes.
     - [ ] Create interest routes.
 - [ ] Create additional/advanced features.
     - [x] Endpoint to upload/store images.
