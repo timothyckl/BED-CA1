@@ -1,16 +1,22 @@
 const db = require('./dbConfig');
-const categoryTB = db.getConn();
+
 
 module.exports = {
     selectAll: (callback) => {
+        const categoryTB = db.getConn();
         categoryTB.connect(err => {
             if (err) return callback(err, null);
             else {
                 const selectAllQuery = `
-                SELECT c.categoryid, c.categoryname as category, c.description
-                FROM category as c;
+                SELECT 
+                    c.categoryid, 
+                    c.categoryname as category, 
+                    c.description
+                FROM 
+                    category as c;
                 `;
                 categoryTB.query(selectAllQuery, (err, data) => {
+                    categoryTB.end();
                     if (err) return callback(err, null);
                     else return callback(null, data);
                 });
@@ -18,18 +24,20 @@ module.exports = {
         });
     },
     createOne: ({ categoryName, description }, callback) => {
-
+        const categoryTB = db.getConn();
         categoryTB.connect(err => {
             if (err) return callback(err, null);
             else {
                 const createOneQuery = `
                 INSERT INTO
-                    category (categoryname, description)
+                    category 
+                    (categoryname, description)
                 VALUES
                     (?, ?);
                 `;
                 const values = [categoryName, description];
                 categoryTB.query(createOneQuery, values, (err, data) => {
+                    categoryTB.end();
                     if (err) return callback(err, null);
                     else return callback(null, data.affectedRows);
                 });
@@ -37,7 +45,7 @@ module.exports = {
         });
     },
     validate: ({ categoryName }, callback) => {
-
+        const categoryTB = db.getConn();
         categoryTB.connect(err => {
             if (err) return callback(err, null);
             else {
@@ -48,6 +56,7 @@ module.exports = {
                 `;
                 const values = [categoryName];
                 categoryTB.query(countQuery, values, (err, count) => {
+                    categoryTB.end();
                     if (err) return callback(err, null);
                     else {
                         const duplicates = count[0].duplicates;

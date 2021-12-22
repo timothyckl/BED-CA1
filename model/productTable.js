@@ -1,8 +1,9 @@
 const db = require('./dbConfig');
-const productTB = db.getConn();
+
 
 module.exports = {
     selectOne: (productid, callback) => {
+        const productTB = db.getConn();
         productTB.connect(err => {
             if (err) return callback(err);
             else {
@@ -24,6 +25,7 @@ module.exports = {
                 `;
 
                 productTB.query(selectOneQuery, productid, (err, productInfo) => {
+                    productTB.end();
                     if (err) return callback(err);
                     else return callback(null, productInfo[0]);
                 });
@@ -37,6 +39,7 @@ module.exports = {
         brand,
         price
     }, callback) => {
+        const productTB = db.getConn();
         productTB.connect(err => {
             if (err) return callback(err, null);
             else {
@@ -62,6 +65,7 @@ module.exports = {
                         `;
                         productTB.query(selectQuery, (err, productid) => {
                             const pid = productid[0].productid;
+                            productTB.end();
                             if (err) return callback(err, null);
                             else return callback(null, pid);
                         });
@@ -71,6 +75,7 @@ module.exports = {
         });
     },
     deleteOne: (productid, callback) => {
+        const productTB = db.getConn();
         productTB.connect(err => {
             if (err) return callback(err, null);
             else {
@@ -82,6 +87,7 @@ module.exports = {
                 `;
 
                 productTB.query(deleteQuery, productid, (err, data) => {
+                    productTB.end();
                     if (err) return callback(err, null);
                     else return callback(null, data);
                 });
@@ -89,6 +95,7 @@ module.exports = {
         });
     },
     createReview: (productID, { userID, rating, review }, callback) => {
+        const productTB = db.getConn();
         productTB.connect(err => {
             if (err) return callback(err, null);
             else {
@@ -114,6 +121,7 @@ module.exports = {
                         DESC LIMIT 1;
                         `;
                         productTB.query(selectQuery, (err, reviewid) => {
+                            productTB.end();
                             if (err) return callback(err, null);
                             else return callback(null, reviewid[0]);
                         })
@@ -123,6 +131,7 @@ module.exports = {
         });
     },
     selectReview: (productID, callback) => {
+        const productTB = db.getConn();
         productTB.connect(err => {
             if (err) return callback(err, null);
             else {
@@ -147,6 +156,7 @@ module.exports = {
                     r.productid = ?;
                 `;
                 productTB.query(selectQuery, productID, (err, reviews) => {
+                    productTB.end();
                     if (err) return callback(err, null);
                     else return callback(null, reviews);
                 })

@@ -1,8 +1,9 @@
 const db = require('./dbConfig');
-const userTB = db.getConn();
+
 
 module.exports = {
     selectAll: (callback) => {
+        const userTB = db.getConn();
         userTB.connect(err => {
             if (err) {
                 return callback(err, null);
@@ -21,6 +22,7 @@ module.exports = {
                     user;
                 `;
                 userTB.query(selectAllQuery, (err, data) => {
+                    userTB.end();
                     if (err) return callback(err, null);
                     else return callback(null, data);
                 });
@@ -28,6 +30,7 @@ module.exports = {
         });
     },
     selectOne: (userid, callback) => {
+        const userTB = db.getConn();
         userTB.connect(err => {
             if (err) {
                 return callback(err, null);
@@ -49,6 +52,7 @@ module.exports = {
                 `;
 
                 userTB.query(selectOneQuery, userid, (err, data) => {
+                    userTB.end();
                     if (err) return callback(err, null);
                     else return callback(null, data);
                 });
@@ -63,6 +67,8 @@ module.exports = {
         newType,
         new_profile_pic_url
     }, callback) => {
+        const userTB = db.getConn();
+
         // once validated, update user data
         const selectOneQuery = `
                     SELECT
@@ -116,6 +122,7 @@ module.exports = {
                 const values = [username, email, contact, password, type, profile_pic_url, id];
 
                 userTB.query(updateOneQuery, values, (err, data) => {
+                    userTB.end();
                     if (err) return callback(err, null);
                     else return callback(null, data.affectedRows);
                 });
@@ -130,6 +137,7 @@ module.exports = {
             type
         },
         profile_pic_url, callback) => {
+        const userTB = db.getConn();
         userTB.connect(err => {
             if (err) {
                 return callback(err, null);
@@ -143,6 +151,7 @@ module.exports = {
                 `;
                 const values = [username, email, contact, password, type, profile_pic_url];
                 userTB.query(createOneQuery, values, (err, data) => {
+                    userTB.end();
                     if (err) return callback(err, null);
                     else return callback(null, data.affectedRows);
                 });
@@ -153,6 +162,7 @@ module.exports = {
         newUsername,
         newEmail
     }, callback) => {
+        const userTB = db.getConn();
         userTB.connect(err => {
             if (err) {
                 return callback(err, null);
@@ -171,9 +181,9 @@ module.exports = {
                 const values = [newUsername, newEmail];
 
                 userTB.query(countQuery, values, (err, data) => {
-                    if (err) {
-                        return callback(err, null);
-                    } else {
+                    userTB.end();
+                    if (err) return callback(err, null);
+                    else {
                         const duplicates = data[0].duplicates
                         return callback(null, duplicates);
                     }
