@@ -7,18 +7,29 @@ module.exports = {
             if (err) callback(err, null);
             else {
                 categoryids = categoryids.split(',');
+
                 const insertQuery = `
                 INSERT INTO 
-                    user_interest
-                    (userid, categoryid)
-                VALUES
-                    (?, ?);
+                    user_interest (userid, categoryid)
+                SELECT 
+                    ? as userid, 
+                    ? as categoryid
+                WHERE NOT EXISTS (
+                    SELECT 
+                        userid, 
+                        categoryid 
+                    FROM
+                        user_interest 
+                    WHERE
+                        userid = ? AND categoryid = ?
+                );
                 `;
 
-                for (n in categoryids) {
-                    userIntTB.query(insertQuery, [userid, categoryids[n]], (err, affectedRows) => {
+                for (catID in categoryids) {
+                    const values = [userid, categoryids[catID], userid, categoryids[catID]];
+                    userIntTB.query(insertQuery, values, (err, result) => {
                         if (err) return callback(err, null);
-                        else return callback(null, affectedRows.affectedRows);
+                        else return callback(null, result);
                     });
                 }
             }

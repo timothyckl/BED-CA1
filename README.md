@@ -9,10 +9,12 @@
     - [x] Create interest routes.
 - [ ] Create additional/advanced features.
     - [x] Endpoint to upload/store images.
-        - [ ] Validate file format. Only accept .jpg / .png and less than 1MB. 
+        - [x] Validate file format. Only accept .jpg / .png and less than 1MB. 
     - [ ] Hash passwords to store into db.
         - [ ] Generate random salt specific to each userid.
     - [ ] Action logging system with timestamp for each request made.
+    - [ ] Endpoint to filter products.
+    - [ ] Promotion/Discount Feature. 
 
 
 
