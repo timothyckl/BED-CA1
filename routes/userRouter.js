@@ -59,16 +59,21 @@ userRouter.route('/')
             if (err) res.status(500).json({ err: err });
             else if (data > 0) res.status(422).json({ error: 'Username/Email already exists. Try again.' });
             else {
-                const { profilePic } = req.files;
+                let profilePic;
+
+                if (req.files) profilePic = req.files.profilePic;
+                else profilePic = null;
+
                 image.validateFile(profilePic, err => {
                     if (err) res.status(500).json({ error: err.message });
                     else {
                         const filePath = image.getFilePath(profilePic)
+                        console.log(filePath);
                         userTB.createOne(req.body, filePath, (err, affectedRows) => {
                             if (err) res.status(500).json({ error: err });
                             else res.status(201).json({ "Affected rows": affectedRows });
                         });
-                    }
+                    };
                 });
             }
         });
