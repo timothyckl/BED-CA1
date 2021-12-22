@@ -50,7 +50,7 @@
 - [x] category
 - [x] reviews
 - [x] userInterest
-- [ ] discount_codes
+- [x] discount_codes
 
 ## Endpoints
 
@@ -76,7 +76,7 @@
 |-------------------------|------------|--------------------------------------------------------------|-----------------|
 |   /product/:id          |    GET     |  Retrive single product by id                                |   200/500       |
 |   /product              |    POST    |  Add new product                                             |   201/500       |
-|   /product/:id          |    DELETE  |  Remove single product by id                                |   204/500       |
+|   /product/:id          |    DELETE  |  Remove single product by id                                 |   204/500       |
 |   /product/:id/review   |    POST    |  Add a review for product. Products can have many reviews.   |   201/500       |
 
 **/interest**
