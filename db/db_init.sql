@@ -67,3 +67,15 @@ CREATE TABLE IF NOT EXISTS `user_interest` (
   REFERENCES category(categoryid)
   ON DELETE CASCADE 
   ON UPDATE CASCADE);
+
+CREATE TABLE IF NOT EXISTS `promo_codes` (
+`promoid` INT NOT NULL AUTO_INCREMENT,
+`productid` INT NOT NULL,
+`startDate` DATE NOT NULL,
+`endDate` DATE NOT NULL,
+`amount` DECIMAL(3,2) NOT NULL,
+PRIMARY KEY (`promoid`),
+FOREIGN KEY (`productid`) 
+REFERENCES product(productid)  
+ON DELETE CASCADE
+ON UPDATE CASCADE);
