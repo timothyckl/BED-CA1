@@ -1,5 +1,3 @@
-const { profile } = require('console');
-const { format } = require('path');
 const path = require('path');
 
 module.exports = {
