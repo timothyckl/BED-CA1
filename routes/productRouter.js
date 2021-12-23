@@ -2,31 +2,30 @@ const express = require('express');
 const productRouter = express.Router();
 const productTB = require('../model/productTable');
 
-productRouter.route('/')
-    .post((req, res) => {
-        // POST /product/
-        // Request body schema:
-        // {
-        //      "name": "SP AMD Ryzen 3600 Laptop",
-        //      "description": "Best Laptop",
-        //      “categoryid”: 1,
-        //      “brand”: “SP IT!”
-        //      "price”:”1855.50”
-        // }
+productRouter.post('/', (req, res) => {
+    // POST /product/
+    // Request body schema:
+    // {
+    //      "name": "SP AMD Ryzen 3600 Laptop",
+    //      "description": "Best Laptop",
+    //      “categoryid”: 1,
+    //      “brand”: “SP IT!”
+    //      "price”:”1855.50”
+    // }
 
-        // Success Code: 201
-        // Content: ID of the newly created listing
-        // {
-        //      "productid": 1
-        // }
+    // Success Code: 201
+    // Content: ID of the newly created listing
+    // {
+    //      "productid": 1
+    // }
 
-        // Error Code: 500
-        // Condition: Unknown Error
-        productTB.createOne(req.body, (err, productid) => {
-            if (err) res.status(500).json({ error: "Internal Server Error" });
-            else res.status(201).json({ productid: productid });
-        });
+    // Error Code: 500
+    // Condition: Unknown Error
+    productTB.createOne(req.body, (err, productid) => {
+        if (err) res.status(500).json({ error: "Internal Server Error" });
+        else res.status(201).json({ productid: productid });
     });
+});
 
 productRouter.route('/:id')
     .get((req, res) => {
