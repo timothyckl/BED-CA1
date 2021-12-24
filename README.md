@@ -7,12 +7,11 @@
     - [x] Create category routes.
     - [x] Create product routes.
     - [x] Create interest routes.
-- [ ] Create additional/advanced features.
+- [x] Create additional/advanced features.
     - [x] Endpoint to upload/store images.
         - [x] Validate file format. Only accept .jpg / .png and less than 1MB. 
     - [x] Hash passwords to store into db.
-    - [ ] Action logging system with timestamp for each request made.
-    - [ ] Endpoint to filter products.
+    - [x] Action logging system with timestamp for each request made.
     - [x] Promotion/Discount Feature. 
 
 
@@ -83,8 +82,6 @@
 |          Route          |   Method   |                     Description                              |    Codes        | 
 |-------------------------|------------|--------------------------------------------------------------|-----------------|
 |   /interest/:userid     |    POST    | Insert user interest. Users can have multiple interests.     |   201/500       |
-
-
 
 ## Getting Started
 
