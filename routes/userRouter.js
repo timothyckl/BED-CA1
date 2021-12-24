@@ -10,44 +10,12 @@ userRouter.use(fileUpload());
 
 userRouter.route('/')
     .get((req, res) => {
-        // GET /users/
-
-        // Success Code: 200
-        // Content: Array of all the users (subset of users’ data) in the database, who may be admin or customer type
-        // [
-        //     {
-        //         "userid": 1,
-        //         "username": "Terry Tan",
-        //         “email”: “terry@gmail.com”,
-        //         "contact": "91234567",
-        //         "type": "Customer",
-        //         "profile_pic_url": "https://www.abc.com/terry.jpg",
-        //         "created_at": "2021-11-02 17:54:57"
-        //     },
-        //     ...
-        // ]
-
-        // Error Code: 500
-        // Condition: Unknown error
         userTB.selectAll((err, allUsers) => {
             if (err) res.status(500).json({ error: err });
             else res.status(200).json(allUsers);
         });
     })
     .post((req, res) => {
-        // POST /users/
-
-        // Success Code: 201
-        // Content: ID of the newly created user
-        // {
-        //  "userid": 1
-        // }
-
-        // Error Code: 422
-        // Condition: The new username OR new email provided already exists.
-        // Error Code: 500
-        // Condition: Unknown error
-
         const {
             username,
             email
@@ -85,22 +53,6 @@ userRouter.route('/')
 
 userRouter.route('/:id')
     .get((req, res) => {
-        // GET /users/:id/
-
-        // Success Code: 200
-        // Content: Subset of the data of the matching single user
-        // {
-        //      "userid": 1,
-        //      "username": "Terry Tan",
-        //      “email”: “terry@gmail.com”,
-        //      "contact": "91234567",
-        //      "type": "Customer",
-        //      "profile_pic_url": "https://www.abc.com/terry.jpg",
-        //      "created_at": "2021-11-02 17:54:57"
-        // }
-
-        // Error Code: 500
-        // Condition: Unknown error
         const { id } = req.params;
         if (isNaN(id)) res.status(500).json({ err: 'User ID is not a number. Try again.' });
         else {
@@ -112,15 +64,6 @@ userRouter.route('/:id')
         }
     })
     .put((req, res) => {
-        // PUT /users/:id/
-
-        // Success Code: 204
-        // Content:Refer to the request body schema for the POST /users endpoint.
-
-        // Error Code: 422
-        // Condition: The new username OR new email provided already exists.
-        // Error Code: 500
-        // Condition: Unknown error
         const { id } = req.params;
         if (isNaN(id)) res.status(500).json({ err: 'User ID is not a number. Try again.' });
         else {
