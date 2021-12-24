@@ -1,6 +1,7 @@
 const express = require('express');
 const fileUpload = require('express-fileupload');
 const image = require('../middleware/image');
+const hashPW = require('../middleware/hashPW');
 
 const userRouter = express.Router();
 const userTB = require('../model/userTable');
@@ -67,9 +68,12 @@ userRouter.route('/')
                 image.validateFile(profilePic, err => {
                     if (err) res.status(500).json({ error: err.message });
                     else {
-                        const filePath = image.getFilePath(profilePic)
-                        console.log(filePath);
-                        userTB.createOne(req.body, filePath, (err, affectedRows) => {
+                        const filePath = image.getFilePath(profilePic);
+                        const plainPW = req.body.password;
+
+                        const hash = hashPW.getHash(plainPW);
+
+                        userTB.createOne(req.body, hash, filePath, (err, affectedRows) => {
                             if (err) res.status(500).json({ error: err });
                             else res.status(201).json({ "Affected rows": affectedRows });
                         });
@@ -125,7 +129,12 @@ userRouter.route('/:id')
                 // if duplicates are found, data will be > 0
                 else if (data > 0) res.status(422).json({ err: 'Username/Email already exists. Try again.' });
                 else {
-                    userTB.updateOne(id, req.body, (err, affectedRows) => {
+                    let newPassword;
+
+                    if (req.body.newPassword) newPassword = hashPW.getHash(req.body.newPassword);
+                    else newPassword = null;
+
+                    userTB.updateOne(id, req.body, newPassword, (err, affectedRows) => {
                         if (err) res.status(500).json({ error: err });
                         else res.status(204).json({ "Affected rows": affectedRows });
                     });

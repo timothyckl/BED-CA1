@@ -63,10 +63,9 @@ module.exports = {
         newUsername,
         newEmail,
         newContact,
-        newPassword,
         newType,
         new_profile_pic_url
-    }, callback) => {
+    }, newPassword, callback) => {
         const userTB = db.getConn();
 
         // once validated, update user data
