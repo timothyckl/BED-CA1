@@ -89,4 +89,5 @@
 
 1. clone repo
 2. npm i
-3. npm start
+3. enter credentials in .env
+4. npm start
