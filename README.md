@@ -13,6 +13,8 @@
     - [x] Hash passwords to store into db.
     - [x] Action logging system with timestamp for each request made.
     - [x] Promotion/Discount Feature. 
+- [ ] Write documentation.
+- [ ] Add sample data.
 
 
 
