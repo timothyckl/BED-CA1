@@ -1,6 +1,5 @@
 const db = require('./dbConfig');
 
-
 module.exports = {
     addInterests: (userid, { categoryids }, callback) => {
         const userIntTB = db.getConn();
