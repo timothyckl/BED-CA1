@@ -26,7 +26,7 @@
 
 ### Requirements
 - [x] Create MySQL database
-- [ ] Create entity relationship diagram
+- [x] Create entity relationship diagram
 - [x] Proper use of PK and FK constraints
 - [x] __(BONUS)__ Create endpoint for img upload/storage
   - Server should only accept .jpg/.png < 1MB
