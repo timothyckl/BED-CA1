@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `username` VARCHAR(45) NOT NULL,
   `email` VARCHAR(60) NOT NULL,
   `contact` VARCHAR(8) NOT NULL,
-  `password` VARCHAR(32) NOT NULL,
+  `password` VARCHAR(512) NOT NULL,
   `type` VARCHAR(16) NOT NULL,
   `profile_pic_url` VARCHAR(512) NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT NOW(),
@@ -23,19 +23,19 @@ CREATE TABLE IF NOT EXISTS `category` (
   UNIQUE INDEX `categoryname_UNIQUE` (`categoryname` ASC) VISIBLE,
   UNIQUE INDEX `description_UNIQUE` (`description` ASC) VISIBLE);
 
-  CREATE TABLE IF NOT EXISTS `product` (
-  `productid` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `description` VARCHAR(128) NOT NULL,
-  `categoryid` INT NOT NULL,
-  `brand` VARCHAR(45) NOT NULL,
-  `price` DECIMAL(6,2) NOT NULL,
-  PRIMARY KEY (`productid`),
-  FOREIGN KEY (categoryid) 
-  REFERENCES category(categoryid) 
-  ON DELETE CASCADE
-  ON UPDATE CASCADE,
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE);
+CREATE TABLE IF NOT EXISTS `product` (
+`productid` INT NOT NULL AUTO_INCREMENT,
+`name` VARCHAR(45) NOT NULL,
+`description` VARCHAR(128) NOT NULL,
+`categoryid` INT NOT NULL,
+`brand` VARCHAR(45) NOT NULL,
+`price` DECIMAL(6,2) NOT NULL,
+PRIMARY KEY (`productid`),
+FOREIGN KEY (categoryid) 
+REFERENCES category(categoryid) 
+ON DELETE CASCADE
+ON UPDATE CASCADE,
+UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE);
 
 CREATE TABLE IF NOT EXISTS `reviews` (
   `reviewid` INT NOT NULL AUTO_INCREMENT,
