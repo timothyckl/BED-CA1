@@ -133,10 +133,9 @@ module.exports = {
             username,
             email,
             contact,
-            password,
             type
         },
-        profile_pic_url, callback) => {
+        password, profile_pic_url, callback) => {
         const userTB = db.getConn();
         userTB.connect(err => {
             if (err) {

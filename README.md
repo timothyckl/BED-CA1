@@ -10,11 +10,10 @@
 - [ ] Create additional/advanced features.
     - [x] Endpoint to upload/store images.
         - [x] Validate file format. Only accept .jpg / .png and less than 1MB. 
-    - [ ] Hash passwords to store into db.
-        - [ ] Generate random salt specific to each userid.
+    - [x] Hash passwords to store into db.
     - [ ] Action logging system with timestamp for each request made.
     - [ ] Endpoint to filter products.
-    - [ ] Promotion/Discount Feature. 
+    - [x] Promotion/Discount Feature. 
 
 
 
@@ -28,10 +27,10 @@
 - [x] Create MySQL database
 - [ ] Create entity relationship diagram
 - [x] Proper use of PK and FK constraints
-- [ ] __(BONUS)__ Create endpoint for img upload/storage
+- [x] __(BONUS)__ Create endpoint for img upload/storage
   - Server should only accept .jpg/.png < 1MB
-- [ ] __(BONUS)__ Retrieve product listings from server
-- [ ] __(BONUS)__ Create endpoint and table for discounts
+- [x] __(BONUS)__ Retrieve product listings from server
+- [x] __(BONUS)__ Create endpoint and table for discounts
 
 ### Grading
 - __75%__ - Demonstrate & satisfy endpoint functionalities.
