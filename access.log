@@ -1,0 +1,5 @@
+GET /users 200 8395 - 65.239 ms
+GET /users/13 200 198 - 4.209 ms
+POST /users 201 19 - 81.150 ms
+POST /product 201 16 - 18.828 ms
+DELETE /product/6 204 - - 15.773 ms
